@@ -1,7 +1,7 @@
 <%-- 
-    Document   : Like
-    Created on : Jul 30, 2022, 12:11:02 PM
-    Author     : MARVIN
+    Document   : normal.jsp
+    Created on : Aug 5, 2022, 4:01:41 PM
+    Author     : BENJAMIN RUKUNDO
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -9,9 +9,9 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Like page</title>
+        <title>JSP Page</title>
     </head>
     <body>
-        <h1>Here are the products</h1>
+        <h1>This is the normal user panel</h1>
     </body>
 </html>
