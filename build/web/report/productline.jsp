@@ -66,7 +66,6 @@
 			</section>
 		
 		</nav>
-	</header>
 	
 	<main class="content-wrap">
 		

@@ -12,10 +12,10 @@
 <%ArrayList<Integer> salelabel=new ArrayList<Integer>(Arrays.asList(sale));%>
 <%!ResultSet res;%>
 
-<%!Integer eId[]={};%>
-<%!Integer pdtlineId[]={};%>
-<%ArrayList<Integer> eIdlabel=new ArrayList<Integer>(Arrays.asList(eId));%>
-<%ArrayList<Integer> pdtlineIdlabel=new ArrayList<Integer>(Arrays.asList(pdtlineId));%>
+<%!Integer price[]={};%>
+<%!String pdtlinename[]={};%>
+<%ArrayList<Integer> pricelabel=new ArrayList<Integer>(Arrays.asList(price));%>
+<%ArrayList<String> pdtlinenamelabel=new ArrayList<String>(Arrays.asList(pdtlinename));%>
 <%!ResultSet rest;%>
 
 <%!Integer a[]={};%>
@@ -34,7 +34,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        <link rel="stylesheet" href="css/grid.css"/>
+        <link rel="stylesheet" href="grid.css"/>
     </head>
     <body>
         <h1 style="text-align: center">GRAPHS</h1>
@@ -44,27 +44,29 @@
                 try {
                     Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/projectdb", "root", "");
                     Statement st = conn.createStatement();
-                    out.println("Connected!");
-                    //BAR CHART
+                    //LINE CHART
+//                    rose=st.executeQuery("Select count(*) from customer where(added_date between '2022-08-08' AND '2022-08-09')");
+//                       rose.next();
+//                       out.println(rose.getInt("count(*)")+" is " +"the number of customers from 2022-08-08 to 2022-08-09");
                     res=st.executeQuery("select * from sale");
                     while(res.next()){
                         salelabel.add(+res.getInt("saleId"));
                         quantlabel.add(res.getInt("quantity"));
                     }
-                    //PIE CHART
-                    rest=st.executeQuery("select * from worker");
+                    //DOUGHNUT CHART
+                    rest=st.executeQuery("select * from productline");
                     while(rest.next()){
-                        pdtlineIdlabel.add(+rest.getInt("productLineId"));
-                        eIdlabel.add(rest.getInt("empId"));
+                        pdtlinenamelabel.add("'"+rest.getString("productLineName")+"'");
+                        pricelabel.add(rest.getInt("price"));
                     }
-                    //LINE GRAPH
+                    //BAR GRAPH
                     rose=st.executeQuery("select * from productline");
                     while(rose.next()){
                         blabel.add("'"+rose.getString("productLineName")+"'");
                         alabel.add(rose.getInt("price"));
                         
                     }
-                    //DOUGHNUT
+                    //PIE CHART
                     shon=st.executeQuery("select * from productcategory");
                     while(shon.next()){
                         catNamelabel.add("'"+shon.getString("categoryName")+"'");
@@ -79,7 +81,7 @@
         %>
         <div>
         <div class="main">
-            <div class="charts" style="content: center">
+            <div class="charts">
            
             <div class="chart">
                 <div>
@@ -111,11 +113,11 @@
     
 var ctx = document.getElementById("line").getContext("2d");
 var myChart = new Chart(ctx, {
-    type: 'bar',
+    type: 'line',
     data: {
         labels: <%out.println(salelabel);%>,
         datasets: [{
-            label: 'Bar Graph Of Sales',
+            label: 'Line Graph Of Sales',
             data: <%out.println(quantlabel);%>,
             backgroundColor: [
                 'rgba(0,255,0)'
@@ -151,12 +153,12 @@ var myChart = new Chart(ctx, {
         <script>
   var ctx2 = document.getElementById('r2').getContext('2d');
 var myChart2 = new Chart(ctx2, {
-    type: 'pie',
+    type: 'doughnut',
     data: {
-        labels: <%out.println(pdtlineIdlabel);%>,
+        labels: <%out.println(pdtlinenamelabel);%>,
             datasets: [{
             label: 'Pie Chart',
-            data: <%out.println(eIdlabel);%>,
+            data: <%out.println(pricelabel);%>,
             backgroundColor: [
                 'rgba(41, 155, 99, 1)',
                 'rgba(54, 162, 235, 1)',
@@ -186,11 +188,11 @@ var myChart2 = new Chart(ctx2, {
     
 var ctx3 = document.getElementById("r3").getContext("2d");
 var myChart3 = new Chart(ctx3, {
-    type: 'line',
+    type: 'bar',
     data: {
         labels: <%out.println(blabel);%>,
         datasets: [{
-            label: 'Line Graph',
+            label: 'Bar Graph Of Product Line',
             data: <%out.println(alabel);%>,
             backgroundColor: [
                 'rgba(0,255,0)'

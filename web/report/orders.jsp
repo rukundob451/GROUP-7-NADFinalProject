@@ -64,7 +64,6 @@
 				</ul>
 		
 		</nav>
-	</header>
 	
 	<main class="content-wrap">
 		
